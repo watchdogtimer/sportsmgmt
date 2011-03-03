@@ -25,5 +25,6 @@ Rails applications.
 
 There are some hardcodings that will go away eventually (such as the homepage).
 For now, the way to set up the application is to register yourself as a user,
-then navigate to your leagues. From there you can create a league and users can
-begin to register for your leagues.
+then navigate to your leagues. Once you've registered you need to create an
+Organization which will 'own' leagues. From there you can create a league and
+users can begin to register for your leagues.
