@@ -1,0 +1,22 @@
+<div id="leftnav">
+  <div class="box">
+    <div class="inner-box-top">
+      <h2>Game Set</h2>
+    </div>
+    <div class="inner-box">
+      <div id="team">
+      <%= @game_set.time.strftime("%b %d %Y %I:%M%p") %><br/>
+      <%= @game_set.team.name %> vs. <%= @game_set.opponent.name %>
+      <%= link_to 'Edit Game Set', edit_game_set_path(@game_set) %>
+      </div>
+      <br/>
+      <div id="games">
+        <% @game_set.games.each do |game| %>
+          (<%= game.score %>) vs. (<%= game.opponent_score %>)
+          <%= link_to 'Edit Game', edit_game_set_game_path(@game_set, game) %> <%= link_to 'Destroy',  game_set_game_path(game.game_set, game), :confirm => 'Are you sure?', :method => :delete %><br/>
+        <% end %><br/>
+        <%= link_to 'New Game', new_game_set_game_path(@game_set) %>
+      </div>
+    </div>
+  </div>
+</div>

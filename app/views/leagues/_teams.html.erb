@@ -1,0 +1,15 @@
+<% league.teams.each_with_index do |team, index| %>
+  <%= index %> <%= link_to team.name, team %> <%= team.organizer.name if team.organizer %> <%= team.players.size %>
+  <%# really inefficient, this should be a calculated value %>
+  <% skill = 0 
+    team.players.each do |player|
+      skill += player.ability_id
+      skill += player.throw_level_id
+    end
+  %>
+  <%= skill/team.players.size unless team.players.size == 0%>
+  <br/>
+<% end %>
+<%- permitted_to? :manage, league do -%>
+  <%= link_to 'New Team', new_league_team_path(league) %><br/>
+<%- end -%>

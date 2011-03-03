@@ -1,0 +1,35 @@
+<div class="game-set" id="game_set_<%= game_set.id %>">
+  <div class="game game-date">
+  <% unless for_league %>
+  <%= game_set.time.strftime("%b %d %Y %I:%M%p") %>
+  <% end %>
+  <% if game_set.winner %>
+    <% team = game_set.winner %>
+    <% opponent = game_set.loser %>
+    <% separator = "def." %>
+  <% else %>
+    <% team = game_set.team %>
+    <% opponent = game_set.opponent %>
+    <% separator = "vs." %>
+  <% end %>
+  <%= team.name %> <%= separator %> <%= opponent.name %>
+  </div>
+  <%- game_set.games.each do |game| %>
+    <div class="game" id="game_<%= game.id %>">
+      <% if game_set.winner %>
+        <% if game_set.winner == game_set.team %>
+          (<%= game.score %>-<%= game.opponent_score %>)
+        <% else %>
+            (<%= game.opponent_score %>-<%= game.score %>)
+        <% end %>
+      <% elsif game.score %>
+        (<%= game.score %>-<%= game.opponent_score %>)
+      <% end %>
+    </div>
+  <%- end %>
+  <%- permitted_to? :edit, game_set do -%>
+    <div class="game">
+    <%= link_to 'Edit', edit_team_game_set_path(team, game_set)%>
+    </div>
+  <%- end %>
+</div>

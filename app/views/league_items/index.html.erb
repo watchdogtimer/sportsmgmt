@@ -1,0 +1,18 @@
+<h1>Listing league_items</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for league_item in @league_items %>
+  <tr>
+    <td><%= link_to 'Show', league_item %></td>
+    <td><%= link_to 'Edit', edit_league_item_path(league_item) %></td>
+    <td><%= link_to 'Destroy', league_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New league_item', new_league_item_path %>

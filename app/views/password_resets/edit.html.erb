@@ -1,0 +1,14 @@
+  <div class="box">
+      <h1>Change My Password</h1>
+    </div>
+    <div class="body">
+      <% form_for @user, :url => password_reset_path, :method => :put do |f| %>
+        <%= f.error_messages %>
+        <%= f.label :password, nil, :class => 'main' %>
+        <%= f.password_field :password, :class => 'main' %><br class="main"/>
+        <%= f.label :password_confirmation, 'Confirm Password', :class => 'main' %>
+        <%= f.password_field :password_confirmation, :class => 'main' %><br class="main"/>
+        <label class="main">&nbsp;</label><%= f.submit "Update Password & Log Me In", :class => 'main long' %>
+      <% end %>  
+      <br/>
+    </div>

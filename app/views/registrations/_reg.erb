@@ -1,0 +1,74 @@
+<div class="box">
+  <h3>Registration Info for <%= league.name %></h3>
+</div>
+<div class="body">
+<% objs = registration %>
+<% if league %>
+  <% objs = [league, registration] %>
+<% end %>
+  <% form_for objs do |f| %>
+  <%= hidden_field_tag "registration[payment_status]", "pending" %>
+  <%= hidden_field_tag "registration[player_id]", current_user.id.to_s %>
+  <%= hidden_field_tag "registration[league_id]", league.id.to_s %>
+  <div class="input-container">
+    <div class="inline padding-top"><%= f.label :shirt_size, "What is your 5 Ultimate shirt size? (they run small)" %></div>
+    <div class="inline">
+      <p><%= f.radio_button :shirt_size, "S" %> <%= f.label :shirt_size, "Small", :class => 'left' %></p>
+      <p>
+        <%= f.radio_button :shirt_size, "M" %>
+        <%= f.label :shirt_size, "Medium", :class => 'left' %>
+      </p>
+      <p>
+        <%= f.radio_button :shirt_size, "L" %>
+        <%= f.label :shirt_size, "Large", :class => 'left' %>  
+      </p>
+      <p>
+        <%= f.radio_button :shirt_size, "XL" %>
+        <%= f.label :shirt_size, "X-Large", :class => 'left' %>    
+      </p>
+      <p>
+        <%= f.radio_button :shirt_size, "XXL" %>
+        <%= f.label :shirt_size, "XX-Large", :class => 'left' %>
+      </p>
+    </div>
+  </div>
+  <div class="input-container">
+    <div class="inline padding-top"><%= f.label :captain, "Would You captain?" %></div>
+    <div class="inline">
+      <p><%= f.radio_button :captain, true %> <%= f.label :captain, "No", :class => 'narrow left' %> <%= f.radio_button :captain, false %> <%= f.label :captain, "Yes", :class => 'narrow left' %></p>
+    </div>
+  </div>
+  <% payment_types = [["Credit Card/Paypal", "paypal"],["Check", "check"]] %>
+  <div class="input-container">
+    <div class="inline padding-top"><%= f.label :payment_type, 'Payment Type' %></div>
+    <div class="inline">
+      <%= f.select(:payment_type, payment_types.collect {|p| [ p[0], p[1] ] }, {:include_blank => 'Select a payment type...'}, {:id => 'form_select', :onchange => "showPaymentOption(this);"}) %>
+    </div>
+  </div>
+  <div id="check_info" class="inline" style="display:none;">
+    <p class="label-align"><%= league.check_info_text %></p><br/>          
+    <input class="label-align" type="submit" value="Submit"/>
+    <% if current_user %>
+      <% cancel_url = player_url(current_user) %>
+    <% else %>
+      <% cancel_url = "/"%>
+    <% end %><%= link_to 'Cancel', cancel_url %>
+  </div>
+  <div id="paypal_button" style="display:none;">
+    <div class="inline"><p class="label-align"><%= league.paypal_form_text %>
+    <% if current_user %>
+      <% cancel_url = player_url(current_user) %>
+    <% else %>
+      <% cancel_url = "/"%>
+    <% end %><%= link_to 'Cancel', cancel_url %></p>
+    </div>
+  </div>
+  <% end %>
+  <br/><br/>
+</div>
+<script>
+$(document).ready(function(){  
+  showPaymentOption($("#form_select")[0]);
+});
+
+</script>

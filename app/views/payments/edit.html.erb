@@ -1,0 +1,13 @@
+<script>
+$(document).ready(function(){
+  showPaymentOption($('form_select'));
+});
+
+</script>
+
+<div class="box">
+  <p><img src="/images/reg_payment.png"/></p>
+</div>
+<div class="body">
+  <%= render :partial => 'form', :locals => {:payment => @payment, :registration => @registration} %>
+</div>

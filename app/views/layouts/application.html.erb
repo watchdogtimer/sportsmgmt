@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>DUDE - Diego Ultimate Disc Experience</title>
+<%= stylesheet_link_tag "styles" %>
+<%= stylesheet_link_tag "jquery-ui-1.7.1.custom.css" %>
+<%= javascript_include_tag "jquery-1.3.2" %>
+<%= javascript_include_tag "ui.core.js" %>
+<%= javascript_include_tag "ui.tabs.js" %>
+<%= javascript_include_tag "application" %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <%- if current_user -%>
+    <div>
+      <ul id="nav">
+        <li><%= link_to 'Me', player_path(current_user) %></li>
+        <li><%= link_to 'My Teams', player_teams_path(current_user) %></li>
+        <li><%= link_to 'Leagues', leagues_path %></li>
+        <% permitted_to? :fully_manage, :organizations do %>
+        <li><%= link_to 'Organizations', organizations_path %></li>
+        <% end %>
+        <%-#<li><a href="/leagues/2/registrations/new" class="new-league">Join Spring League</a></li>-%>
+      </ul>
+    </div>
+    <div id="right-nav">
+      <a href="/logout">logout</a>
+    </div>
+    <%- else -%>
+    <div>
+      <ul id="nav">
+        <li><%= link_to 'Leagues', leagues_path %></li>
+      </ul>
+    </div>
+    <div id="right-nav">
+      <a href="/players/new">join</a>
+      <a href="/login">login</a>
+    </div>
+    <%- end -%>
+  </div>
+  <div id="content">
+  <div id="notice"><p style="color:green;<% unless flash[:notice] %>display:none;<% end %>"><%= flash[:notice] %></p></div>
+  <%= yield %>
+  <div class="push"></div>
+  </div>
+  <div class="footer">
+<%= link_to("Privacy Policy", "/privacy") %> | <%= link_to("Terms of Service", "/tos") %> | <a href="mailto:dudewinter2008@gmail.com?subject=DUDE Site Support">Contact Us</a>
+  </div>
+</div>
+</body>
+</html>

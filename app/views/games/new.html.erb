@@ -1,0 +1,15 @@
+<% if @game_set %>
+<% team_name = @game_set.team.name %>
+<% opponent_name = @game_set.opponent.name %>
+<h2><%= team_name %> vs. <%= opponent_name %></h2>
+<% end %>
+<div class="box">
+  <h2>New Game <% if @game_set %> in Set<% end %><% if @league %> <span class="blue small">for: <%= @league.name %></span><% end %></h2></div>
+  <div class="body">
+    <% locals = { :game => @game, :teams => @teams, :team_name => team_name, :opponent_name => opponent_name, :league => @league, :game_set => @game_set, :team => @team } %>
+    <%= render :partial => 'form', :locals => locals %>
+    <br/>
+    <%= link_to 'Back to Game Set', game_set_path(@game_set) if @game_set %>
+    <% cancel_link = @game_set ? game_set_path(@game_set) : games_path %>
+    <%= link_to 'Cancel', cancel_link %>
+  </div>

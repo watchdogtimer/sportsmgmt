@@ -1,0 +1,46 @@
+<% objs = game %>
+<% if game_set %>
+  <% objs = [game_set, game] %>
+<% elsif league %>
+  <% objs = [league, game] %>
+<% elsif team %>
+  <% objs = [team, game]%>
+<% end %>
+<% if game_set && game_set.games.size > 0 %>
+<div id="games">
+  <% game_set.games.each do |game_in_set| %>
+  <% unless game.id == game_in_set.id %>
+  <p>Game <%= game_in_set.game_in_set %>
+  <% if game_in_set.score %>
+    (<%= game_in_set.score %>) vs. (<%= game_in_set.opponent_score %>)
+  <% else %>
+    (no scores)
+  <% end %>
+  <%= link_to 'Edit Game', edit_game_set_game_path(@game_set, game_in_set) %></p>
+  <% end %>
+  <% end %>
+</div>
+<br/>
+<% end %>
+<% form_for objs do |f| %>
+  <%= hidden_field_tag("game[game_set_id]", game_set.id) if game_set %>
+  <%= hidden_field_tag("game[league_id]", league.id) if league %>
+
+  <%- if game_set %>
+    <p><%= f.label :game_in_set%><%= f.text_field :game_in_set%></p>
+  <%- end %>
+  <%- if game_set %>
+    <p><%= f.label :score, "#{team_name} Score" %>
+  <%- else %>
+    <p><%= f.label :team %> <%= collection_select("game", "team_id", teams, :id, :display_name, {:include_blank => true},{:id => 'team_select'}) %> Score<%- end -%> <%= f.text_field :score, :size => 5 %></p>
+  
+  <%- if game_set %>
+    <p><%= f.label :opponent_score, "#{opponent_name} Score" %><%- else %>
+      
+    <p><%= f.label :other_team %> <%= collection_select("game", "opponent_id", teams, :id, :display_name, {:include_blank => true},{:id => 'team_select'}) %> Score <%- end %> <%= f.text_field :opponent_score, :size => 5 %></p>
+  
+  <% unless game_set %>
+    <p><%= f.label :date %><%= datetime_select("game", "time") %></p>
+  <% end %>
+  <%= f.submit game.new_record? ? "Create" : "Update", :class => 'label-align' %>
+<% end %>

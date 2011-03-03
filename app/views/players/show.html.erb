@@ -1,0 +1,54 @@
+<div class="player-header">
+  <div class="player-title">
+    <h2>
+      <%= @player.name %> 
+      <%=raw admin_links(nil, @player) %>
+      <span class="small">
+        <% if @player.teams.size > 0 %>teams (<%= @player.teams.collect { |team| link_to team.name, team }.join(", ")%>)
+      <% end %>
+  </span>
+</h2>
+  </div>
+<% if @player.has_notifications? %>
+<div class="notifications">
+  <h3>Notifications</h3></div>
+  <div class="notifications-body">
+    <ul>
+    <% @player.unregistered_leagues.each do |league| %>
+      <li>Join <%= link_to league.name, new_league_registration_path(league) %></li>
+    <% end %>
+    <% @player.newly_joined_leagues.each do |league| %>
+      <li>You've joined <%= league.name%>, but have not been assigned a team yet.</li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>  
+</div>
+<div class="box">
+  <h3>Personal Info</h3>
+</div>
+<div class="body">
+  <p><span class="indent">Name</span><%= @player.name %></p>
+  <p><span class="indent">Email</span><%= @player.login %></p>
+</div>
+
+<div class="box">
+  <h3>Skills <%= @player.ability_id + @player.throw_level_id %></h3>
+</div>
+<div class="body">
+  <p><span class="indent">Ability</span><%= @player.ability.description %></p>
+  <p><span class="indent">Throws</span><%= @player.throw_level.description %></p>
+</div>
+  
+<div class="box">
+  <h3>Registrations</h3>
+</div>
+<% if @player.registrations.size > 0 %>
+  <% @player.registrations.each do |reg| %>
+    <%= render :partial => 'reg', :locals => { :reg => reg } %>
+  <% end %>
+<% else %>
+<div class="body">
+  <p><em>Not Registered for any leagues</em></p>
+</div>
+<% end %>

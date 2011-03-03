@@ -1,0 +1,25 @@
+  <% team = @game.game_set ? @game.game_set.team : @game.team %>
+  <% opponent = @game.game_set ? @game.game_set.opponent : @game.opponent %>
+  <% if @game_set %>
+  <% path = edit_game_set_game_path(@game_set, @game) %>
+  <% elsif @team %>
+  <% path = edit_team_game_path(@team, @game)%>
+  <% else %>
+  <% path = edit_game_path(@game) %>
+  <% end %>
+  <h2><%= team.name %> vs. <%= opponent.name %> <%= link_to('edit', path, :class => 'light')%></h2>
+  <div class="box">
+    <h3>Game</h3></div>
+    <div class="body">
+      <%- if @game.game_set %>
+        <p><%= label :game_in_set, 'Game in Set' %><%= @game.game_in_set %></p>
+      <%- end %>
+        
+      <p><%= label :score, "#{link_to team.name, team} Score" %><%= @game.score %></p>
+      <p><%= label :opponent_score, "#{link_to opponent.name, opponent} Score" %><%= @game.opponent_score %></p>
+
+      <p><%= label :date, "Date" %><%= @game.game_set ? @game.game_set.time.strftime("%b %d %Y %I:%M%p") : @game.time.strftime("%b %d %Y %I:%M%p") %></p>
+    </div>
+  
+  <%= link_to 'Back to Game Set', game_set_path(@game.game_set) if @game.game_set %>
+  <%= link_to 'Back to League', @game.league if @game.league %>

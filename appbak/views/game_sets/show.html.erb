@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>League:</b>
+  <%= @game_set.league_id %>
+</p>
+
+<p>
+  <b>Team:</b>
+  <%= @game_set.team_id %>
+</p>
+
+<p>
+  <b>Opponent:</b>
+  <%= @game_set.opponent_id %>
+</p>
+
+<p>
+  <b>Time:</b>
+  <%= @game_set.time %>
+</p>
+
+
+<%= link_to 'Edit', edit_game_set_path(@game_set) %> |
+<%= link_to 'Back', game_sets_path %>

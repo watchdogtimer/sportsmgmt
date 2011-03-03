@@ -1,0 +1,13 @@
+<% if @league %>
+  <p><img src="/images/reg_personal.png"/></p>
+<% else %>
+  <h2>Welcome to DUDE</h2>
+<% end %>
+<div class="box">
+  <h3>Registration for<% if @league %> <%= @league.name %><% else %> DUDE<% end %><% unless current_user %> <span class="light small"> or <%= link_to 'Login', '/login' %> if you have a DUDE account already</span><% end %></h3></div>
+  <div class="body">
+    <% objs = @league ? [@league, @player] : @player %>
+    <% form_for objs do |f| %>
+      <%= render :partial => 'players/player', :locals => {:f => f, :player => @player, :league => @league} %>
+    <% end %>
+  </div>

@@ -1,0 +1,9 @@
+  <h2>Game Sets</h2>
+  <div class="box">
+    <h3>All Game Sets</h3></div>
+    <div class="body">
+      <% @game_sets.each do |game_set| %>
+        <p><%= link_to game_set.team.name, game_set.team %> <span class="blue">vs. <%= link_to game_set.opponent.name, game_set.opponent %></span> on <%= game_set.time.strftime("%b %d %Y %I:%M%p") %> <%= link_to('edit', edit_game_set_path(game_set), :class => 'light')%> <%= link_to 'Destroy', game_set, :confirm => 'Are you sure?', :method => :delete %></p>
+      <% end %>
+    </div>
+  <%= link_to 'New', new_game_set_path %>

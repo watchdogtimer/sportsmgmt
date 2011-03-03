@@ -1,0 +1,18 @@
+  <div class="box">
+    <h2>New Set</h2></div>
+    <div class="body">
+      
+      <% form_for [@team, @game_set], :url => {:action => 'create'}, :html => {:method => :post, :class => 'small_hidden'} do |f| %>
+      
+        <%= hidden_field_tag("game[league_id]", @league.id) if @league %>
+        <%= f.label :team %>
+        <%= collection_select("game_set", "team_id", @league.teams, :id, :display_name, {},{:id => 'team_select',  :class => "inline"}) %><br/>
+        <%= f.label :opponent %>
+        <%= collection_select("game_set", "opponent_id", @league.teams, :id, :display_name, {},{:id => 'team_select',  :class => "inline"}) %><br/>
+        <%= f.label :date %>
+        <%= datetime_select("game_set", "time")%>
+
+        <%= f.submit "Create" %>
+      <% end %>
+      <br/>
+    </div>

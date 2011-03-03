@@ -1,0 +1,30 @@
+<% if league %>
+<input type="hidden" id="league_id" name="league_id" value="<%= league.id %>"/>
+<% end %>
+<%= error_messages_for :player, :header_message => "We were unable to register you.", :message => nil %>
+<p><%= f.label :first_name, "First Name" %> <%= f.text_field :first_name %></p>
+<p><%= f.label :last_name, "Last Name" %> <%= f.text_field :last_name %></p>
+<p><%= f.label :gender, "Gender" %><%= f.radio_button :gender, 0 %> <%= f.label :gender, "Male", :class => 'left narrow' %> <%= f.radio_button :gender, 1 %> <%= f.label :gender, "Female", :class => 'left narrow' %></p>
+<p><%= f.label :login, "Email" %> <%= f.text_field :login %></p>
+<p><%= f.label :login, "Confirm Email" %> <%= f.text_field :login_confirmation %></p>
+<p><%= f.label :password, "Password" %> <%= f.password_field :password %></p>
+<p><%= f.label :password, "Confirm Password" %> <%= f.password_field :password_confirmation %></p>
+<div class="input-container">
+  <div class="inline padding-top"><%= f.label :ability_id, 'Ability' %></div>
+  <div class="inline">
+    <%- @abilities.each do |a| -%>
+    <p><%= f.radio_button :ability_id, a.id %> <%= f.label "ability_id_#{a.id}", a.description, :class => 'left' %></p>
+    <%- end -%>
+  </div>
+</div>
+<div class="input-container">
+  <div class="inline padding-top"><%= f.label :throw_level_id, 'Throws' %></div>
+  <div class="inline">
+    <%- @throw_levels.each do |t| -%>
+    <p><%= f.radio_button :throw_level_id, t.id %> <%= f.label "throw_level_id_#{t.id}", t.description, :class => 'left' %></p>
+    <%- end -%>
+  </div>
+</div>
+<p>
+  <input class="label-align" type="submit" value="<%= league ? "Next" : "Submit" %>"/>
+</p>

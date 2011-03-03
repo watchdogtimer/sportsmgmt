@@ -1,0 +1,15 @@
+<div class="body body-nobottom">
+<%- if current_user && current_user.admin? -%>
+  <%= index + 1 %><%= check_box_tag "players[#{player.id}]", player.id, false, :class => "inline" %>
+  <%= link_to player.name, player_path(player) %> (<%= player.login %>)
+  <%= player.ability_id + player.throw_level_id %>
+  <% reg = player.registrations.find(:first, :conditions => {:league_id => @team.league}) %>
+  <% if reg && reg.payment %>
+  <%= reg.payment_type %> <%= reg.payment_status %>
+  <% else %>
+  No payment
+  <% end %>
+<%- else %>
+  <%= player.name %>
+<%- end %>
+</div>

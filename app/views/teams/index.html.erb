@@ -1,0 +1,46 @@
+<% if @teams.size > 0 %>
+<% @teams.each do |team| %>
+<% permitted_to? :read, team do %>
+  <div class="box">
+    <h2><%= link_to team.name, team %></h2></div>
+    <div class="body">
+      <h4>Roster</h4>
+      <% team.players.each do |player| %>
+        <%= player.name %> (<span class="blue"><%= player.login %></span>)<br/>
+      <% end %>
+      <br/>
+      <h4>Schedule</h4>
+      <% if team.league.game_type == "Sets" %>
+        <% team.game_sets.each do |game_set| %>
+          <%= render :partial => 'game_sets/game_set', :locals => {:game_set => game_set, :team => team, :for_league => false} %>
+        <% end %>
+      <% elsif team.league.game_type == "Games"  %>
+      
+        <% team.games.each do |game| %>
+        <%= render :partial => 'games/game', :locals => {:game => game, :team => team, :for_league => false} %>
+        <% end %>
+      <% end %>
+      
+      <%# TODO needs league for this %>
+      <% if @league %>
+      <%- permitted_to? :manage, @league do -%>
+        <p><%= link_to 'New Team', new_league_team_path(@league) %></p>
+      <%- end -%>
+      <% end %>
+    </div>
+<% end %>
+<% end %>
+<% else %>
+<div class="box">
+  <h2>Teams</h2></div>
+  <div class="body">
+    <p><em>You belong to no teams</em></p>
+    
+    <%# TODO needs league for this %>
+    <% if @league %>
+    <%- permitted_to? :manage, @league do -%>
+      <p><%= link_to 'New Team', new_league_team_path(@league) %></p>
+    <%- end -%>
+    <% end %>
+  </div>
+<% end %>

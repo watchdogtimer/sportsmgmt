@@ -1,0 +1,27 @@
+<div class="box"><h3><% if @league.game_type == "Games" %>Games<% else%>Game Sets<% end %></h3></div>
+  <div class="body">
+  <% if @league.game_type == "Games" %>
+    <% @grouped_games.each do |group_of_games| %>
+      <% group_of_games[1].each do |game| %>
+        <%= render :partial => 'games/game', :locals => {:game => game, :league => @league} %>
+        <br/>
+      <% end %>
+      <br/>
+    <% end %>
+  <% else %>
+    <% @grouped_game_sets.keys.each do |date| %>
+      <%= date.strftime("%b %d %Y %I:%M%p") %>
+        <% @grouped_game_sets[date].each do |game_set| %>
+        <%= render :partial => 'game_sets/game_set', :locals => {:team => game_set.team, :game_set => game_set, :for_league => true} %>
+      <% end %>
+    <% end %>
+  <% end %><br/><br/>
+<% if @league.game_type == 'Sets' %>
+  <% permitted_to? :create, GameSet.new do %>
+    <%= link_to 'New Set', new_league_game_set_path(@league) %>
+  <% end %>
+<% end %>
+<% permitted_to? :create, Game.new do %>
+  <%= link_to 'New Game', new_league_game_path(@league) %>
+<% end %>
+</div>

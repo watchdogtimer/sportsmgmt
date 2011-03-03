@@ -1,0 +1,15 @@
+<%- if team.players && team.players.size > 0 -%>
+  <%- if current_user && current_user.admin? -%>
+    <%- league = team.league if league.nil? -%>
+    <%- objs = league.nil? ? team : [league, team] -%>
+    <%- form_for objs do |f| -%>      
+    <%= render :partial => "players", :locals => {:team => team} %>
+    <% end %>
+  <%- else %>  
+    <%= render :partial => "players", :locals => {:team => team} %>
+  <%- end %>
+<%- else %>  
+<div class="box">
+  <h3>Players <span class="small">(<%= team.players.size %> total)</span></h3></div>
+  <div class="body"></div>
+<%- end %>

@@ -1,0 +1,30 @@
+<div id="content">
+  <p><img src="/images/reg_ultimate.png"/></p>
+  <div class="box">
+    <h3>Team Info</h3>
+    <div class="body">
+      <% objs = @registration %>
+      <% if @league %>
+        <% objs = [@league, @registration] %>
+      <% end %>
+      <% form_for objs do |f| %>
+        <% if @league %>
+        <%= hidden_field :league, :id %>
+        <% end %>
+        <div class="inline"><p><%= f.label :team_info, 'Solo' %> <%= f.radio_button :team_info, 1, :onclick => "$('volunteer').show();" %>
+          <% if @league && @league.teams %>
+          <p><%= f.label :team_info, 'Choose From Existing Team' %> <%= f.radio_button :team_info, 2, :onclick => "$('volunteer').hide();" %> <%= select("league", "teams", @league.teams.collect {|t| [ t.display_name, t.id ] }, {:include_blank => 'Select a team...'}, :class => "inline") %></p>
+          <p><%= f.label :team_info, 'Captain A New Team' %> <%= f.radio_button :team_info, 3, :onclick => "$('volunteer').hide();" %> <%= f.text_field :team_name, :size => 20 %> <%= select("team", "skill_level", [["Beginner", "beginner"], ["Advanced", "advanced"]], {:include_blank => 'Select a level...'}) %></p>
+        </div>
+        <% end %>
+        <div class="inline clear narrow">          
+          <p>Here you have 3 options for the league.  If you're looking to play on a hat team, select Solo.  If you're already on a team and the captain has registered the team, select the team from the drop down.  If your captain hasn't set up the team yet, please sign up as solo for now and log back in to select your team once the captain has registered your team.  Lastly, if you're creating a new team, enter the team name and skill level for your team, then let your teammates know that they can register.</p>
+        </div>
+        <div id="volunteer" style="display:none;">
+          <p><%= f.label :captain, "Would You captain?" %><%= f.radio_button :captain, 0 %><%= f.label :captain, "No", :class => 'narrow left' %><%= f.radio_button :captain, 1 %><%= f.label :captain, "Yes", :class => 'narrow left' %></p>
+        </div>
+        <div><p><input class="label-align" type="submit" value="Next"/></p></div>
+      <% end %>
+    </div>
+  </div>
+</div>

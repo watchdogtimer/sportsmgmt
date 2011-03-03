@@ -1,0 +1,9 @@
+<div class="box">
+  <h3>Forgot Password</h3>
+  <h3>Enter Email below and instructions to reset your password will be emailed to you:</h3></div>
+  <div class="body">
+    <% form_tag password_resets_path do %>
+    <p><label>Email:</label><%= text_field_tag "email", nil %></p>
+    <p><label>&nbsp;</label><%= submit_tag "Reset my password" %></p>
+    <% end %>
+  </div>

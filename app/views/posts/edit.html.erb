@@ -1,0 +1,14 @@
+  <div class="box">
+    <h2>Edit Post</h2></div>
+    <div class="body">
+      
+      <% form_for [@league, @post] do |f| %>
+        <p><%= f.label :type %><%= select_tag("post[type]", "<option>NewsItem</option><option>LeagueItem</option>", {:include_blank => true}) %></p>
+        <p><%= f.label :post_time %><%= date_select("post", "post_time") %></p>
+        <p><%= f.label :title %><%= f.text_field(:title) %></p>
+        <p><%= f.label :body %><%= f.text_area(:body) %></p>
+
+        <%= f.submit "Create", :class => 'label-align' %>
+      <% end %>
+      <br/>
+    </div>

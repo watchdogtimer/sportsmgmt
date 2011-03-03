@@ -1,0 +1,18 @@
+<% objs = payment %>
+<% if registration %>
+<% objs = [registration, payment] %>
+<% end %>
+
+<% form_for objs, :html => { :id => 'payment_type_form' } do |f| %>  
+  <%= hidden_field :registration, :id %>
+  
+  <% payment_types = [["Credit Card/Paypal", "paypal"],["Check", "check"]] %>
+  <%= f.label :payment_type, 'Payment Type' %> <%= f.select(:payment_type, payment_types.collect {|p| [ p[0], p[1] ] }, {:include_blank => 'Select a payment type...'}, {:id => 'form_select', :onchange => "showPaymentOption(this);"}) %>
+  <div id="check_info" class="inline" style="display:none;">
+    <p class="label-align"><%= registration.league.check_info_text %></p><br/>
+    <input class="label-align" type="submit" value="Submit"/>
+  </div>
+  <div id="paypal_button" style="display:none;">
+    <%= registration.league.paypal_form_text if registration %>          
+  </div>
+<% end %>

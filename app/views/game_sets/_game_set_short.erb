@@ -1,0 +1,5 @@
+<div class="game_set" id="game_set_<%= game_set.id %>">
+  <%= game_set.time.strftime("%b %d %Y %I:%M%p") %>
+  <%= game_set.team.name %> vs. <%= game_set.opponent.name %>
+  <%= link_to 'Edit', edit_team_game_set_path(team, game_set)%>
+</div>

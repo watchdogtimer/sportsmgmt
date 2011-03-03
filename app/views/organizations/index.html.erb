@@ -1,0 +1,12 @@
+<div class="box">
+  <h3>Organizations</h3>
+</div>
+<div class="body">
+  <p>
+  <% @organizations.each do |organization| %>
+      <%= link_to organization.name, organization %> <%=raw admin_links(nil, organization) %><br/>
+  <% end %></p>
+  <%- permitted_to? :create, Organization.new do -%>
+  <p><%= link_to 'New Organization', new_organization_path %></p>
+  <%- end -%>
+</div>

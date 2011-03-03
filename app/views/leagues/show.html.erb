@@ -1,0 +1,29 @@
+<script type='text/javascript'>
+$(document).ready(function() {
+	$("#tabs").tabs();
+});
+</script>
+<div class="box">
+  <h2><%= @league.name %> <%=raw admin_links(nil, @league) %></h2>
+</div>
+<div class="body">
+<% if permitted_to? :manage, @league do %>
+  <% tabs_for(:class => "box") do |tab| %>
+    <% tab.create('league_tab', 'League') do %>
+      <%= render :partial => "league_tab", :locals => {:league => @league} %>
+    <% end %>
+    <% tab.create('teams_tab', 'Teams') do %>
+      <%= render :partial => "teams", :locals => {:league => @league} %>
+    <% end %>
+    <% tab.create('schedule_tab', 'Schedule') do %>
+      <%= render :partial => "schedule", :locals => {:league => @league} %>
+    <% end %>
+    <% tab.create('admin_tab', 'Admin') do %>
+      <%= render :partial => "roster", :locals => {:league => @league} %>
+    <% end %>
+  <% end %>
+<% end %>
+<% else %>
+  <%= render :partial => "league_tab", :locals => {:league => @league} %>
+<% end %>
+</div>

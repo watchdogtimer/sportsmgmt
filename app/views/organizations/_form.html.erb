@@ -1,0 +1,13 @@
+<% form_for organization do |f| %>
+  <%= f.error_messages %>
+  <p><%= f.label :name, 'Name' %><%= f.text_field :name %></p>
+  <p>
+    <% if permitted_to? :fully_manage, Organization.new do %>
+      <%= f.label :owner, 'Owner' %>
+    <%= select("organization", "user_id", users.collect {|p| [p.name, p.id]}, {:include_blank => "Select an Owner"}, {:id => 'organizer_select',  :class => "label-align"}) %></p>
+    <% end %>
+    <% else %>
+      <%= hidden_field_tag "organization[user_id]", current_user.id %>
+    <% end %>
+  <p><%= f.submit organization.new_record? ? "Create" : "Update", :class => 'label-align' %> <%= link_to 'Cancel', organizations_path %></p>
+<% end %>

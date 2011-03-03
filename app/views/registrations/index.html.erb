@@ -1,0 +1,10 @@
+  <div class="box">
+    <h3>Registrations</h3></div>
+    <div class="body">
+    <% @registrations.each do |registration| %>
+    
+    <p><%= link_to 'Show', registration %>
+    <%= link_to 'Edit', edit_registration_path(registration) %>
+    <%= link_to 'Destroy', registration, :confirm => 'Are you sure?', :method => :delete %></p>
+    <% end %>
+    </div>

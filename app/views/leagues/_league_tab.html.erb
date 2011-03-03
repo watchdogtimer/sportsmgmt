@@ -1,0 +1,10 @@
+<p>Description: <%= league.description %></p>
+<p>Registration Fee: $<%= sprintf("%.2f", league.reg_fee) %></p>
+<p>Late Registration Fee: $<%= sprintf("%.2f", league.late_reg_fee) if league.late_reg_fee %></p>
+<p>Registration is late if submitted on or after: <%= league.late_reg_date.strftime("%b %d %Y") if league.late_reg_date %></p>
+<p>Registration closes on: <%= league.close_reg_date.strftime("%b %d %Y") %></p>
+<% if current_user %>
+<p><%= link_to 'Join!', new_league_registration_path(league) %></p>
+<% else %>
+<p><%= link_to 'Join!', new_league_player_path(league) %></p>
+<% end %>

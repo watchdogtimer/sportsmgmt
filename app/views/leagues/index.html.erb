@@ -1,0 +1,13 @@
+<div class="box">
+  <h3>Leagues</h3>
+</div>
+<div class="body">
+  <%= render :partial => 'leagues/leagues', :locals => {:leagues => @leagues} %>
+  <%- permitted_to? :create, League.new do -%>
+    <% if @organization %>
+    <p><%= link_to 'New League', new_organization_league_path(@organization) %></p>
+    <% else %>
+    <p><%= link_to 'New League', new_league_path %></p>
+    <% end %>
+  <%- end -%>
+</div>

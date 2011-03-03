@@ -1,0 +1,17 @@
+<div class="box">
+  <h2>Edit Team</h2></div>
+  <div class="body">
+    <% form_for @team do |f| %>
+      <%= hidden_field_tag(:league_id, @league.id) if @league %>
+      <p><%= f.label :name %> <%= f.text_field :name %></p>
+      <p><%= f.label :organizer %>
+      <% if @team.organizer%>
+      <%= check_box_tag :remove_organizer %> Remove Organizer ( <%= @team.organizer.name %> )
+      <% else %>
+      <%= select("team", "organizer_id", @players.collect {|p| [p.name, p.id]}, {:include_blank => "Select an Organizer", :id => 'player_select',  :class => "inline"}) %>
+      <% end %></p>
+      <% link = @league ? league_team_path(@league, @team) : team_path(@team)%>
+      <p><input class="label-align" type="submit" value="Update"/> <%= link_to "Cancel", link %></p>
+    <% end %>
+  </div>
+<%= render :partial => "team_players", :locals => {:league => @league, :team => @team } %>

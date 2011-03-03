@@ -1,0 +1,27 @@
+<div class="game" id="game_<%= game.id %>">
+  <%= game.time.strftime("%b %d %Y %I:%M%p") %>
+  
+  <% if game.winner %>  
+    <%= game.winner.name %> def. <%= game.loser.name %>
+    <% if game.winner == game.team %>
+      (<%= game.score %>-<%= game.opponent_score %>)
+    <% else %>
+        (<%= game.opponent_score %>-<%= game.score %>)
+    <% end %>
+  <% else %>    
+    <%= game.team.name %> vs. <%= game.opponent.name %>
+    <% if game.score %>
+      (<%= game.score %>-<%= game.opponent_score %>)
+    <% end %>
+  <% end %>
+  
+  <%- if current_user && current_user.admin? -%>
+  <% if game.team %>
+  <%= link_to 'Edit', edit_team_game_path(game.team, game)%>
+  <% elsif league %>
+  <%= link_to 'Edit', edit_league_game_path(league, game)%>
+  <% else %>
+  <%= link_to 'Edit', edit_game_path(game)%>
+  <% end %>
+  <%- end %>
+</div>

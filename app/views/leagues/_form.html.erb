@@ -1,0 +1,24 @@
+<% objs = league %>
+<% objs = [organization, league] if organization %>
+<% form_for objs do |f| %>
+  <%= f.error_messages %>
+  <% if league.new_record? && organization %>
+  <%= hidden_field_tag "league[organization_id]", organization.id %>
+  <% end %>
+  
+  <p><%= f.label :organization, 'Organization' %> <%= select("league", "organization_id", Organization.all.collect {|o| [o.name, o.id]}, {:include_blank => "Select an Organization", :id => 'organization_select' }) %></p>
+  <p><%= f.label :name %><%= f.text_field :name %></p>
+  <p><%= f.label :paypal_form_text %><%= f.text_area :paypal_form_text, :rows => 5 %></p>
+  <p><%= f.label :check_info_text %><%= f.text_area :check_info_text, :rows => 5 %></p>
+  <p><%= f.label :description %><%= f.text_area :description, :rows => 5 %></p>
+  <p><%= f.label :player_cap %><%= f.text_field :player_cap %></p>
+  <p><%= f.label :game_type %>
+    <%= select("league", "game_type", [["Games","Games"], ["Sets", "Sets"]], {:include_blank => true}, {:id => 'game_type_select'}) %></p>  
+  <p><%= f.label :locked, 'Freeze Registration?' %><%= f.check_box :locked %></p>
+  <p><%= f.label :late_reg_date %><%= f.date_select :late_reg_date %></p>
+  <p><%= f.label :close_reg_date %><%= f.date_select :close_reg_date %></p>
+  
+  <p><%= f.label :reg_fee %><%= f.text_field :reg_fee %></p>
+  <p><%= f.label :late_reg_fee %><%= f.text_field :late_reg_fee %></p>
+  <p><%= f.submit league.new_record? ? "Create" : "Update", :class => 'label-align' %> <%= link_to 'Cancel', leagues_url %></p>
+<% end %>

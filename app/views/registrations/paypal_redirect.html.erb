@@ -1,0 +1,16 @@
+<SCRIPT LANGUAGE="JavaScript">
+$(document).ready(function() {
+  $('#paypal_redirect').submit();
+});
+
+</SCRIPT>
+
+  <div class="box">
+    <p><img src="/images/reg_payment.png"/></p></div>
+    <div class="body">
+    <h3>Redirecting to paypal...one moment</h3>
+    <div style="display:none;">  
+      
+        <%= @registration.league.paypal_form_text if @registration.league && @registration.league.paypal_form_text %>
+    </div>
+    </div>

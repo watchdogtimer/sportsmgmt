@@ -1,0 +1,11 @@
+<h1>New league_item</h1>
+
+<% form_for(@league_item) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', league_items_path %>

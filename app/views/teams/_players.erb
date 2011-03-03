@@ -1,0 +1,7 @@
+<div class="box">
+  <h3>Players <span class="small">(<%= @team.players.size %> total)</span>
+  <%- if current_user && current_user.admin? -%><%= submit_tag 'Remove players from Team' %><% end %></h3></div>
+  <% index = 0 %>
+    <% @team.players.each_with_index do |player, index| %>
+      <%= render :partial => "shared/player_row", :locals => {:player => player, :index => index} %>
+    <% end %><div class="body body-nobottom body-noborder"></div>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  league_id: 1
+  team_id: 1
+  opponent_id: 1
+  time: 2010-10-28 21:08:49
+
+two:
+  league_id: 1
+  team_id: 1
+  opponent_id: 1
+  time: 2010-10-28 21:08:49

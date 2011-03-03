@@ -1,0 +1,19 @@
+<div class="box">
+  <h2>Create a New Team<% if @league %> for <%= @league.name %><% end %></h2></div>
+  <div class="body">    
+    <% objs = @league ? [@league, @team] : @team %>
+    <% form_for objs do |f| %>
+    <%= f.error_messages %>
+    <p><%= f.label :name, 'Name' %> <%= f.text_field :name %></p>
+    <% if @league %>
+    <p><%= f.label :organizer, 'Organizer' %> <%= select("team", "organizer_id", @league.players.collect {|p| [p.name, p.id]}, {:include_blank => "Select a Player", :id => 'player_select',  :class => "inline"}) %></p>
+    
+    <input type="hidden" id="team_league_id" name="team[league_id]" value="<%= @league.id %>"/>
+    <% else %>
+    <p><%= f.label :organizer, 'Organizer' %> <%= current_user.name %></p>
+    <input type="hidden" id="team_organizer_id" name="team[organizer_id]" value="<%= current_user.id %>"/>
+    <% end %>
+    <p><%= f.submit "Create", :class => 'label-align' %></p>
+    <% end %>
+  </div>
+

@@ -1,0 +1,10 @@
+<div class="box">
+  <h3>Rostering</h3></div>
+  <div class="body">
+  <% if permitted_to? :manage, @league do %>
+    <%= render :partial => 'admin_league', :locals => {:league => @league} %>
+    <% end %>
+  <% else %>
+    <%= render :partial => 'league', :locals => {:league => @league} %>
+  <% end %>
+  </div>

@@ -1,0 +1,11 @@
+  <div class="box">
+    <h2>New Role</h2></div>
+    <div class="body">
+      <% form_for @role do |f| %>
+        <p><%= f.label :title %><%= f.text_field(:title) %></p>
+        <p><%= f.label :authorizable_type %><%= select("role", "authorizable_type", ["League"], {:include_blank => "Select a Role Authorizable Type", :id => 'role_authorizable_type',  :class => "inline"}) %></p>
+        <p><%= f.label :grant_access_to %><%= select("role", "authorizable_id", League.all.collect {|t| [t.name, t.id]}, {:include_blank => "Select a League", :id => 'team_select',  :class => "inline"}) %></p>
+        <%= f.submit "Create", :class => 'label-align' %>
+      <% end %>
+      <br/>
+    </div>

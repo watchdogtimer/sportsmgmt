@@ -1,0 +1,2 @@
+class LeagueItem < Post
+end

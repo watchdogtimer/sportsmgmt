@@ -1,0 +1,22 @@
+  <h2><%= @game_set.team.name %> <span class="blue">vs. <%= @game_set.opponent.name %></span> <%= link_to('edit', edit_game_set_path(@game_set), :class => 'light')%></h2>
+  <div class="box">
+    <h3>Game Set</h3></div>
+    <div class="body">
+      <p><%= label :team, "Team"%><%= link_to @game_set.team.name, team_path(@game_set.team)%></p>
+      <p><%= label :opponent, "Opponent"%><%= link_to @game_set.opponent.name, team_path(@game_set.opponent) %></p>
+      <p><%= label :date, "Date" %><%= @game_set.time.strftime("%b %d %Y %I:%M%p") %></p>
+      <br/>
+      <div id="games">
+        <% @game_set.games.each do |game| %>
+        <p>Game <%= game.game_in_set %>
+        <% if game.score %>
+          (<%= game.score %>) vs. (<%= game.opponent_score %>)
+        <% else %>
+          (no scores)
+        <% end %>
+        <%= link_to 'Edit Game', edit_game_set_game_path(@game_set, game) %></p>
+        <% end %>
+        <%= link_to 'Add Game', new_game_set_game_path(@game_set) %>
+      </div>
+    </div>
+  <%= link_to "Back to Game Sets", game_sets_path %>

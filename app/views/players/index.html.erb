@@ -1,0 +1,11 @@
+<h2>Players<% if @league %> For <%= @league.name %><% end %></h2>
+<div class="box">
+  <h3>Modify Players</h3></div>
+  <div class="body">
+    <p>
+    <% @players.each do |player| %>
+      <%= link_to player.name, player %> <%= link_to 'Edit', edit_player_path(player) %> <%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %><br/>
+    <% end %></p>
+    <p><%= link_to 'New Player', new_player_path %>
+    </p>
+  </div>

@@ -1,0 +1,78 @@
+<table class="stats">
+  <tr><td colspan="5" class="hed">Teams</td></tr>
+  <tr><td><%= league.teams.size %></td><td>Name</td><td>Organizer</td><td>Skill</td><td># of Players</td></tr>
+  <% league.teams.each_with_index do |team, index| %>
+  <tr>
+    <td><%= index + 1 %></td>
+    <td><%= link_to team.name, league_team_path(league, team) %></td>
+    <td><%= team.organizer.name if team.organizer %></td>
+    <% skill = 0 
+      team.players.each do |player|
+        skill += player.ability_id
+        skill += player.throw_level_id
+      end
+    %>
+    <td><%= skill/team.players.size unless team.players.size == 0%></td>
+    <td><%= team.players.size %></td>
+  </tr>
+  <% end %>
+</table>
+<br/>
+<table class="stats">
+  <tr><td colspan="7" class="hed">Players</td></tr>
+  <tr>
+    <td><%= league.players.size %></td>
+    <td><%= sort_link 'Name', :last_name %><%= arrow :last_name %></td>
+    <td><%= sort_link 'Email', :login %><%= arrow :login %></td>
+    <td><%= sort_link 'Skill', :skill %><%= arrow :skill %></td>
+    <td>Team</td>
+    <td>Payment Type</td>
+    <td>Payment Status</td></tr>
+  <% league.players.each_with_index do |player, index| %>
+  <tr>
+    <td><%= index + 1 %></td>
+    <td><%= link_to player.name, league_player_path(league, player) %></td>
+    <td><%= player.login %></td>
+    <td><%= (player.ability.id + player.throw_level.id) %>
+    <% team = player.teams.find(:first, :conditions => {:league_id => league}) %>
+    <td><%= if team then team.name else "solo" end %></td>
+    <% reg = player.registrations.find(:first, :conditions => {:league_id => league}) %>
+    <td><%= reg.payment_type %></td><td><%= reg.payment_status %></td>
+  </tr>
+  <% end %>
+</table>
+<br/>
+<% form_for :league, league, :url => {:action => 'update'}, :html => {:method => :put} do |f| %>
+  <%= select("league_teams", "team", league.teams.collect {|t| [t.name, t.id]}, {:include_blank => "Select a Team", :id => 'team_select',  :class => "inline"}) %>
+  <%= f.submit 'Add players to Team' %>
+<br/><br/>
+<table class="stats">
+  <tr><td colspan="7" class="hed">Solo Players</td></tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><%= sort_link 'Name', :last_name %><%= arrow :last_name %></td>
+    <td><%= sort_link 'Email', :login %><%= arrow :login %></td>
+    <td><%= sort_link 'Skill', :skill %><%= arrow :skill %></td>
+    <td>Gender</td>
+    <td>Payment Type</td>
+    <td>Payment Status</td></tr>
+  <% index = 0 %>
+  <% league.players.each do |player| %>
+  
+  <% team = player.teams.find(:first, :conditions => {:league_id => league}) %>
+  <% unless team %>
+  <tr>
+    <td><div class="inline"><%= index + 1 %></div><div class="inline"><%= check_box_tag "players[#{player.id}]", player.id, false, :class => "inline" %></div></td><% index = index + 1 %>
+    <td><%= link_to player.name, league_player_path(league, player) %></td>
+    <td><%= player.login %></td>
+    <td><%= (player.ability.id + player.throw_level.id) %></td>
+    <td><%= player.gender == "0" ? "M" : "F" %></td>
+    <% reg = player.registrations.find(:first, :conditions => {:league_id => league}) %>
+    <% if reg %>
+    <td><%= reg.payment_type %></td><td><%= reg.payment_status %></td>
+    <% end %>
+  </tr>
+  <% end %>
+  <% end %>
+</table>
+<% end %>

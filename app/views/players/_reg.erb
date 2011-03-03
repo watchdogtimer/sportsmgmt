@@ -1,0 +1,33 @@
+<div class="body body-nobottom">
+    <%= reg.league.name if reg.league %>
+    <% if admin? %>
+      <%= link_to 'destroy',  player_registration_path(reg.player, reg), {:confirm => 'Are you sure?', :method => :delete, :class => 'light'} %>
+    <% end %>
+    <%= link_to 'Change Registration Info', edit_player_registration_path(reg.player, reg) %>
+<% if reg %>  
+  <%= reg.payment.payment_type %> <%= reg.payment.status %>
+ <% if reg.payment.status == "pending" %>
+   <% if current_user && current_user.admin? %>
+      <% form_for reg, :url => {:controller => 'registrations', :action => 'update', :id => reg.id}, :html => {:method => :put} do |f| %>
+        <%= hidden_field_tag "registration[payment_status]", "approved"%>
+        <input type="submit" value="Approve"/>
+      <% end %>
+    <% end %>
+  <% elsif reg.payment.status == "approved" %>
+    <% if current_user && current_user.admin? %>
+      <% form_for reg, :url => {:controller => 'registrations', :action => 'update', :id => reg.id}, :html => {:method => :put} do |f| %>
+        <%= hidden_field_tag "registration[payment_status]", "pending"%>
+        <input type="submit" value="Unapprove"/>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if reg.payment.payment_type == "check" && reg.payment.status == "pending" %>
+      <p><%= reg.league.check_info_text %></p>
+    <strong>Change to Paypal: <%= link_to 'Make Payment', edit_registration_path(reg) %></strong>
+  <% elsif reg.payment.payment_type == 'paypal' && reg.payment.status == "pending" %>
+    <strong>If not paid via Paypal already: <%= link_to 'Make Payment', edit_registration_path(reg) %></strong>
+   <% end %>
+<% else %>
+    <%= link_to 'Make Payment', new_registration_payment_path(reg)%>
+<% end %>
+</div>
